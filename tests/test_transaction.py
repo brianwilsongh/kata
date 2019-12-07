@@ -13,6 +13,6 @@ class TestTransaction(unittest.TestCase):
         self.inv.add("corn", 1.99, by_weight=True)
     
     def test_add_item_to_transaction_is_stored(self):
-        self.trans.add(self.inv.read("corn"))
-        self.trans.add(self.inv.read("caviar"))
-        assertEqual(2, len(self.trans.items))
+        self.trans.add(self.inv, "corn", 3)
+        self.trans.add(self.inv, "caviar", 41)
+        self.assertEqual(2, len(self.trans.items))
