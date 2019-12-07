@@ -10,3 +10,11 @@ class TestDiscount(unittest.TestCase):
     def test_adding_markdown_discount_is_stored(self):
         self.disc.add_markdown("corn", 25)
         self.assertEqual(1, len(self.disc.markdowns))
+    
+    def test_retrieve_markdown_for_item(self):
+        self.disc.add_markdown("carrot", 95)
+        self.assertEqual(95, self.disc.get_markdown("carrot"))
+    
+    def test_retrieve_markdown_price_for_item(self):
+        self.assertEqual(95, self.disc.get_markdown("carrot"))
+        self.asserEqual(0.50, self.disc.get_markdown_price("carrot", 10.00))
