@@ -5,9 +5,8 @@ import discount
 
 class TestDiscount(unittest.TestCase):
     def setUp(self):
-        disc = discount.Discount()
+        self.disc = discount.Discount()
     
-    def test_adding_discount_is_stored(self):
-        discount = {"type": "Markdown", "id": "corn", "pct": 25}
-        disc.add(discount)
-        self.assertEqual(1, len(disc.discounts))
+    def test_adding_markdown_discount_is_stored(self):
+        self.disc.add_markdown("corn", 25)
+        self.assertEqual(1, len(self.disc.markdowns))
