@@ -5,9 +5,10 @@ class Inventory:
         print("Initiatilizing inventory")
         self._store = {}
         
-    def add(self, id, price):
+    def add(self, id, price, by_weight=False):
         self._store[id] = {
-            'price': price
+            "price": price,
+            "by_weight": by_weight
         }
         return None
     
