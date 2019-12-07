@@ -16,3 +16,8 @@ class TestTransaction(unittest.TestCase):
         self.trans.add(self.inv, "corn", 3)
         self.trans.add(self.inv, "caviar", 41)
         self.assertEqual(2, len(self.trans.items))
+        
+    def test_add_item_tracks_quantity(self):
+        self.trans.add(self.inv, "corn", 842)
+        self.assertEqual(842, self.trans.items["corn"]["quant"])
+        
