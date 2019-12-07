@@ -31,6 +31,14 @@ class TestInventory(unittest.TestCase):
         self.inv.add("tomato", 2.99, by_weight=True)
         self.inv.delete("tomato")
         self.assertEqual(None, self.inv.read("tomato"))
-
+    
+    def test_update_item(self):
+        self.inv.add("coffee beans", 6.99, by_weight=True)
+        self.inv.modify("coffee beans", 7.99, by_weight=True)
+        coffee_data = self.inv.read("coffee beans")
+        self.assertEqual(7.99, coffee_data["price"])
+        self.inv.modify("coffee beans", 7.99, by_weight=False)
+        coffee_data = self.inv.read("coffee beans")
+        self.assertFalse(coffee_data["by_weight"])
 if __name__ == '__main__':
     unittest.main()

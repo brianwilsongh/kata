@@ -17,3 +17,7 @@ class Inventory:
         
     def delete(self, id):
         self._store.pop(id)
+    
+    def modify(self, id, price, by_weight=False):
+        self.delete(id)
+        self.add(id, price, by_weight=False)
