@@ -26,6 +26,7 @@ class TestTransaction(unittest.TestCase):
     
     def test_remove_item_from_transaction(self):
         self.trans.delete("corn")
-        self.assertIsNone(self.items.get("corn"))
-        self.assertEquals(2, len(self.items("corn")))
+        items = self.trans.items
+        self.assertIsNone(items.get("corn"))
+        self.assertEqual(2, len(items))
         
