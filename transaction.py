@@ -11,3 +11,7 @@ class Transaction:
     
     def get_total(self):
         total = 0
+        for item, data in self.items.items():
+            for x in range(data['quant']): #prevent rounding issues with huge quantities
+                total += data['price']
+        return float(format(total, ".2f"))
