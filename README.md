@@ -1,3 +1,14 @@
+# Run unit tests:
+
+python3 -m unittest discover -v
+
+# Run application:
+
+python3 app.py -V
+or 
+python3 app.py --verbose
+
+
 # Checkout Order Total Kata
 
 You have been contracted to write part of a grocery point-of-sale system. Your job is to implement the business logic to calculate the pre-tax total price as items are scanned or entered at checkout.

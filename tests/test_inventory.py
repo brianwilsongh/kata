@@ -11,7 +11,7 @@ class TestInventory(unittest.TestCase):
     def test_add_item_to_inventory(self):
         inv = inventory.Inventory()
         inv.add("ground beef")
-        self.assertEqual(0, len(inv._store))
+        self.assertEqual(1, len(inv._store))
 
 if __name__ == '__main__':
     unittest.main()
