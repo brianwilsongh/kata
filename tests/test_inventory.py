@@ -40,5 +40,6 @@ class TestInventory(unittest.TestCase):
         self.inv.modify("coffee beans", 7.99, by_weight=False)
         coffee_data = self.inv.read("coffee beans")
         self.assertFalse(coffee_data["by_weight"])
+        
 if __name__ == '__main__':
     unittest.main()
