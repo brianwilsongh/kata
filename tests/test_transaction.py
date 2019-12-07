@@ -40,4 +40,9 @@ class TestTransaction(unittest.TestCase):
         self.disc.add_markdown("corn", 10)
         total = self.trans.get_total(self.disc)
         self.assertEqual(1920.68, total)
+    
+    def test_buy_x_triggers_markdown(self):
+        self.disc.add_volume_markdown("caviar", 1, 50)
+        total = self.trans.get_total(self.disc)
+        self.assertEqual(990.88, total)
         
