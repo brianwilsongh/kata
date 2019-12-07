@@ -9,7 +9,7 @@ class Transaction:
     def delete(self, id):
         self.items.pop(id)
     
-    def get_total(self):
+    def get_total(self, discount):
         total = 0
         for item, data in self.items.items():
             for x in range(data['quant']): #prevent rounding issues with huge quantities

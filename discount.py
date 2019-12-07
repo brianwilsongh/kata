@@ -8,8 +8,12 @@ class Discount:
         self.markdowns[id] = pct
     
     def get_markdown(self, id):
-        return self.markdowns[id]
+        return self.markdowns.get(id)
         
-    def get_markdown_price(self, id, price):
-        multiplier = (100 - self.get_markdown(id))/100
-        return round(multiplier * price, 2)
+    def apply_markdown_price(self, id, price):
+        this_markdown = self.get_markdown(id)
+        if this_markdown:
+            multiplier = (100 - self.get_markdown(id))/100
+            return round(multiplier * price, 2)
+        else:
+            return price
