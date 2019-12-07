@@ -3,11 +3,13 @@ import sys, os
 sys.path.append(os.getcwd())
 import transaction
 import inventory
+import discount
 
 class TestTransaction(unittest.TestCase):
     def setUp(self):
         self.trans = transaction.Transaction()
         self.inv = inventory.Inventory()
+        self.disc = discount.Discount()
         self.inv.add("caviar", 46.52, by_weight=True)
         self.inv.add("nutella", 7.99)
         self.inv.add("corn", 1.99, by_weight=True)
@@ -31,6 +33,11 @@ class TestTransaction(unittest.TestCase):
         self.assertEqual(2, len(items))
         
     def test_retrieve_total_without_discounts(self):
-        total = self.trans.get_total()
+        total = self.trans.get_total(self.disc)
         self.assertEqual(1921.28, total)
+    
+    def test_retrieve_total_with_markdown(self):
+        self.disc.add_markdown("corn", 10)
+        total = self.trans.get_total(self.disc)
+        self.assertEqual(1920.68, total)
         
