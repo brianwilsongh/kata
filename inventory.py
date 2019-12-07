@@ -13,4 +13,7 @@ class Inventory:
         return None
     
     def read(self, id):
-        return self._store[id]
+        return self._store.get(id)
+        
+    def delete(self, id):
+        self._store.pop(id)

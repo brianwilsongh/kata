@@ -30,7 +30,7 @@ class TestInventory(unittest.TestCase):
     def test_delete_item(self):
         self.inv.add("tomato", 2.99, by_weight=True)
         self.inv.delete("tomato")
-        self.assertTrue(None, inv.read("tomato"))
+        self.assertEqual(None, self.inv.read("tomato"))
 
 if __name__ == '__main__':
     unittest.main()
