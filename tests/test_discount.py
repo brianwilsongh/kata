@@ -20,7 +20,7 @@ class TestDiscount(unittest.TestCase):
         self.assertEqual(1, len(self.disc.quantified))
         
     def test_adding_weight_based_discount_is_stored(self):
-        self.disc.add_weighted("beans", 5, 15, 50)
+        self.disc.add_weighted("beans", 5.00, 5, 15, 50)
         self.assertEqual(1, len(self.disc.weighted))
         
     def test_adding_volume_markdown_discount_is_stored(self):
