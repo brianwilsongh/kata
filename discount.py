@@ -83,11 +83,12 @@ class Discount:
             if discount['times_used'] >= discount['limit']:
                 self.delete_weighted(discount['id'])
                 memo['active_discounts'].remove(discount)
-            else:
-                if price <= discount['price']:
-                    multiplier = (100 - discount['pct'])/100
-                    price = round(multiplier * price, 2)
-                    discount['times_used'] = discount['times_used'] + 1  
+        for idx, discount in enumerate(memo['active_discounts']):
+            if price <= discount['price']:
+                multiplier = (100 - discount['pct'])/100
+                price = round(multiplier * price, 2)
+                discount['times_used'] = discount['times_used'] + 1  
+                break #already used a discount, don't keep searching
         if not memo['items'].get(id):
             memo['items'][id] = 1
         else:
@@ -97,4 +98,5 @@ class Discount:
             weighted_disc['id'] = id
             memo['active_discounts'].append(weighted_disc)
         #still need to sort the active discounts, descending
+        memo['active_discounts'].sort(key=lambda x: x['price'], reverse=True)
         return (memo, price)
