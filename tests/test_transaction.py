@@ -78,4 +78,19 @@ class TestTransaction(unittest.TestCase):
         total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1936.28, total)
         
+    def test_weighted_discount_applies_in_descending_order(self):
+        #make sure the highest price discount availabe is used first
+        self.inv.add("peas", 1.50, by_weight=True)
+        self.trans.add(self.inv, "peas", 10)
+        peas_price = self.inv.read('peas')['price']
+        self.disc.add_weighted("peas", peas_price, 1, 5, 25)
+        
+        self.inv.add("apple", 1.00, by_weight=True)
+        self.trans.add(self.inv, "apple", 20)
+        corn_price = self.inv.read('corn')['price']
+        self.disc.add_weighted("corn", corn_price, 3, 15, 50) #corn weight discount should transfer to apples
+        
+        total = self.trans.get_total(self.inv, self.disc)
+        self.assertEqual(1945.03, total)
+        
         
