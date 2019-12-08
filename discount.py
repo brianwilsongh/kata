@@ -5,6 +5,7 @@ class Discount:
         self.markdowns = {}
         self.volume_markdowns = {}
         self.quantified = {}
+        self.weighted = {}
         
     def add_markdown(self, id, pct):
         self.markdowns[id] = pct
@@ -21,6 +22,12 @@ class Discount:
             'price': price,
             'limit': limit
         } 
+        
+    def add_weighted(self, id, threshold, limit):
+        self.weighted[id] = {
+            'threshold': threshold,
+            'limit': limit
+        }
     
     def get_markdown(self, id):
         return self.markdowns.get(id)
