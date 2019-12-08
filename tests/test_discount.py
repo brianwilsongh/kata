@@ -12,6 +12,14 @@ class TestDiscount(unittest.TestCase):
         self.assertEqual(1, len(self.disc.markdowns))
         
     def test_adding_volume_markdown_discount_is_stored(self):
+        self.disc.add_volume_markdown("corn", 5, 1.50)
+        self.assertEqual(1, len(self.disc.volume_markdowns))
+        
+    def test_adding_quantified_discount_is_stored(self):
+        self.disc.add_quantified("corn", 3, 1.00)
+        self.assertEqual(1, len(self.disc.quantified))
+        
+    def test_adding_volume_markdown_discount_is_stored(self):
         self.disc.add_volume_markdown("corn", 5, 25)
         self.assertEqual(1, len(self.disc.volume_markdowns))
     

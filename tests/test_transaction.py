@@ -18,12 +18,9 @@ class TestTransaction(unittest.TestCase):
         self.trans.add(self.inv, "nutella")
     
     def test_add_item_to_transaction_is_stored(self):
-        # self.trans.add(self.inv, "corn", 3)
-        # self.trans.add(self.inv, "caviar", 41)
         self.assertEqual(3, len(self.trans.items))
         
     def test_add_item_tracks_quantity(self):
-        # self.trans.add(self.inv, "corn", 842)
         self.assertEqual(1, self.trans.items["nutella"]["quant"])
     
     def test_remove_item_from_transaction(self):
@@ -47,7 +44,7 @@ class TestTransaction(unittest.TestCase):
         self.assertEqual(990.88, total)
     
     def test_transaction_triggers_x_for_y_promo(self):
-        self.disc.add_quantified_discount("corn", 3, 2.50)
+        self.disc.add_quantified("corn", 3, 2.50)
         total = self.trans.get_total(self.disc)
-        self.assertEqual(1917.30, total)
+        self.assertEqual(1917.81, total)
         
