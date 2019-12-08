@@ -62,3 +62,18 @@ class TestTransaction(unittest.TestCase):
         total = self.trans.get_total(self.disc)
         self.assertEqual(1967.28, total)
         
+    def test_weighted_discount_applies_to_own_item_type(self):
+        self.inv.add("apple", 1.00, by_weight=True)
+        self.trans.add(self.inv, "apple", 20)
+        self.disc.add_weighted("corn", 2, 1, 75) #third weight unit of corn will be 75% off
+        total = self.trans.get_total(self.disc)
+        self.assertEqual(1940.78, total)
+        
+    def test_weighted_discount_applies_to_cheaper_item_type(self):
+        self.inv.add("apple", 1.00, by_weight=True)
+        self.trans.add(self.inv, "apple", 20)
+        self.disc.add_weighted("corn", 3, 10, 50) #corn weight discount should transfer to apples
+        total = self.trans.get_total(self.disc)
+        self.assertEqual(1936.28, total)
+        
+        

@@ -26,7 +26,7 @@ class Discount:
     def add_weighted(self, id, threshold, limit, pct):
         self.weighted[id] = {
             'threshold': threshold,
-            'pct': pct
+            'pct': pct,
             'limit': limit
         }
     
