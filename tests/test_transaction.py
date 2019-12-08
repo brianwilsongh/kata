@@ -30,50 +30,52 @@ class TestTransaction(unittest.TestCase):
         self.assertEqual(2, len(items))
         
     def test_retrieve_total_without_discounts(self):
-        total = self.trans.get_total(self.disc)
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1921.28, total)
     
     def test_retrieve_total_with_markdown(self):
         self.disc.add_markdown("corn", 10)
-        total = self.trans.get_total(self.disc)
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1920.68, total)
     
     def test_buy_x_triggers_markdown(self):
         self.disc.add_volume_markdown("caviar", 1, 50)
-        total = self.trans.get_total(self.disc)
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(990.88, total)
     
     def test_transaction_triggers_x_for_y_promo(self):
         self.disc.add_quantified("corn", 3, 2.50)
-        total = self.trans.get_total(self.disc)
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1917.81, total)
         
     def test_transaction_triggers_x_for_y_promo_multiple_times(self):
         self.inv.add("apple", 5.00)
         self.trans.add(self.inv, "apple", 10)
         self.disc.add_quantified("apple", 2, 0.20)
-        total = self.trans.get_total(self.disc)
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1922.28, total)
     
     def test_transaction_x_for_y_obeys_limit(self):
         self.inv.add("apple", 5.00)
         self.trans.add(self.inv, "apple", 20)
         self.disc.add_quantified("apple", 2, 1.00, limit=6)
-        total = self.trans.get_total(self.disc)
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1967.28, total)
         
     def test_weighted_discount_applies_to_own_item_type(self):
         self.inv.add("apple", 1.00, by_weight=True)
         self.trans.add(self.inv, "apple", 20)
-        self.disc.add_weighted("corn", 2, 1, 75) #third weight unit of corn will be 75% off
-        total = self.trans.get_total(self.disc)
-        self.assertEqual(1940.78, total)
+        corn_price = self.inv.read('corn')['price']
+        self.disc.add_weighted("corn", corn_price, 2, 1, 75) #third weight unit of corn will be 75% off
+        total = self.trans.get_total(self.inv, self.disc)
+        self.assertEqual(1939.79, total)
         
     def test_weighted_discount_applies_to_cheaper_item_type(self):
         self.inv.add("apple", 1.00, by_weight=True)
         self.trans.add(self.inv, "apple", 20)
-        self.disc.add_weighted("corn", 3, 10, 50) #corn weight discount should transfer to apples
-        total = self.trans.get_total(self.disc)
+        corn_price = self.inv.read('corn')['price']
+        self.disc.add_weighted("corn", corn_price, 3, 10, 50) #corn weight discount should transfer to apples
+        total = self.trans.get_total(self.inv, self.disc)
         self.assertEqual(1936.28, total)
         
         
