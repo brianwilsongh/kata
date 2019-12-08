@@ -15,10 +15,11 @@ class Discount:
             'threshold': threshold
         }
     
-    def add_quantified(self, id, quant, price):
+    def add_quantified(self, id, quant, price, limit=None):
         self.quantified[id] = {
             'quant': quant,
-            'price': price
+            'price': price,
+            'limit': limit
         } 
     
     def get_markdown(self, id):
@@ -50,8 +51,13 @@ class Discount:
     
     def apply_quantified(self, id, trans_quant):
         this_quant = self.get_quantified(id)
+        disc_limit = trans_quant + 1
         if this_quant:
-            if trans_quant >= this_quant['quant']:
-                new_quant = trans_quant - this_quant['quant']
-                return (this_quant['price'], new_quant)
+            if this_quant.get('limit'):
+                disc_limit = this_quant['limit']
+            disc_applications = 0
+            while trans_quant >= this_quant['quant'] and disc_applications < disc_limit:
+                trans_quant -= this_quant['quant']
+                disc_applications += 1
+            return (this_quant['price'] * disc_applications, trans_quant)
         return None

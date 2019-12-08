@@ -60,5 +60,5 @@ class TestTransaction(unittest.TestCase):
         self.trans.add(self.inv, "apple", 20)
         self.disc.add_quantified("apple", 2, 1.00, limit=6)
         total = self.trans.get_total(self.disc)
-        self.assertEqual(1997.28, total)
+        self.assertEqual(1967.28, total)
         
