@@ -14,5 +14,6 @@ class Transaction:
         for item, data in self.items.items():
             for x in range(data['quant']): #prevent rounding issues with huge quantities
                 after_markdown = discount.apply_markdown_price(item, data['price'])
-                total += after_markdown
+                after_vol_markdown = discount.apply_volume_markdown_price(item, after_markdown)
+                total += after_vol_markdown
         return float(format(total, ".2f"))
