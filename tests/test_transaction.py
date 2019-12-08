@@ -45,4 +45,9 @@ class TestTransaction(unittest.TestCase):
         self.disc.add_volume_markdown("caviar", 1, 50)
         total = self.trans.get_total(self.disc)
         self.assertEqual(990.88, total)
+    
+    def test_transaction_triggers_x_for_y_promo(self):
+        self.disc.add_quantified_discount("corn", 3, 2.50)
+        total = self.trans.get_total(self.disc)
+        self.assertEqual(1917.30, total)
         
